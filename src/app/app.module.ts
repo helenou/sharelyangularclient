@@ -9,15 +9,19 @@ import { AlertComponent } from './components/alert/alert.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { RegisterComponent } from './components/register/register.component';
 import {ReactiveFormsModule} from '@angular/forms';
-import {UserService} from './services/user.service';
+import { UserDetailsComponent } from './components/user-details/user-details.component';
+import { HeaderComponent } from './components/header/header.component';
+import {AuthService} from './services/auth.service';
 
 @NgModule({
   declarations: [
+    HeaderComponent,
     AppComponent,
     LoginComponent,
     AlertComponent,
     NotFoundComponent,
     RegisterComponent,
+    UserDetailsComponent,
   ],
   imports: [
     BrowserModule,
@@ -25,7 +29,7 @@ import {UserService} from './services/user.service';
     ReactiveFormsModule,
     HttpClientModule
   ],
-  providers: [UserService],
-  bootstrap: [AppComponent]
+  providers: [AuthService],
+  bootstrap: [HeaderComponent, AppComponent]
 })
 export class AppModule { }

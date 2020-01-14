@@ -1,7 +1,7 @@
 import {Component, NgZone, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
-import {UserService} from '../../services/user.service';
+import {AuthService} from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -10,32 +10,41 @@ import {UserService} from '../../services/user.service';
 })
 
 export class LoginComponent implements OnInit {
-  issueForm: FormGroup;
-  IssueArr: any = [];
-
-  ngOnInit() {
-    this.login();
-  }
+  loginForm: FormGroup;
+  submitted = false;
+  returnUrl: string;
+  error: {};
+  loginError: string;
 
   constructor(
-    public fb: FormBuilder,
-    private ngZone: NgZone,
+    private fb: FormBuilder,
     private router: Router,
-    public userService: UserService
+    private authService: AuthService
   ) { }
 
-  login() {
-    this.issueForm = this.fb.group({
-      email: [''],
-      motDePasse: ['']
+  ngOnInit() {
+    this.loginForm = this.fb.group({
+      email: ['', Validators.required],
+      motDePasse: ['', Validators.required]
     });
+
+    this.authService.logout();
   }
 
-  submitForm() {
-    this.userService.Login(this.issueForm.value).subscribe(res => {
-      console.log('Connexion en cours!');
-      this.ngZone.run(() => this.router.navigateByUrl('/'));
-    });
-  }
+  get email() { return this.loginForm.get('email'); }
+  get motDePasse() { return this.loginForm.get('motDePasse'); }
 
+  onSubmit() {
+    this.submitted = true;
+    this.authService.login(this.loginForm.value).subscribe((data) => {
+        if (this.authService.isLoggedIn) {
+          const redirect = this.authService.redirectUrl ? this.authService.redirectUrl : '/home';
+          this.router.navigate([redirect]);
+        } else {
+          this.loginError = 'Email ou mot de passe incorrect.';
+        }
+      },
+      error => this.error = error
+    );
+  }
 }

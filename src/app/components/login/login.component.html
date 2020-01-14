@@ -1,21 +1,36 @@
-<div class="container wrapper wrapper2">
-  <div class="row">
-
-    <!-- Form -->
-    <div class="col-md-12">
-      <h3>Connexion</h3>
-      <form [formGroup]="issueForm" (ngSubmit)="submitForm()" novalidate>
-        <div class="form-group">
-          <label>Email</label>
-          <input type="text" formControlName="email" class="form-control" maxlength="66">
+<section class="login-wrap mtb-40">
+  <div class="container">
+    <div class="row justify-content-center" *ngIf="!error">
+      <div class="col-md-6">
+        <div class="login-box">
+          <h1>Page de connexion</h1>
+          <div class="alert alert-danger" *ngIf="loginError">
+            {{loginError}}
+          </div>
+          <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+            <div class="form-group">
+              <input type="text" formControlName="email" class="form-control" placeholder="Email" required>
+              <div *ngIf="email.invalid && (email.dirty || email.touched)" class="error">
+                <div *ngIf="email.errors">
+                  L'email est requis.
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <input type="password" formControlName="motDePasse" class="form-control" placeholder="Mot de passe" required>
+              <div *ngIf="motDePasse.invalid && (motDePasse.dirty || motDePasse.touched)" class="error">
+                <div *ngIf="motDePasse.errors">
+                  Le mot de passe est requis.
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <button type="submit" [disabled]="!loginForm.valid" class="btn btn-primary">Se connecter</button>
+            </div>
+          </form>
         </div>
-        <div class="form-group">
-          <label>Mot de passe</label>
-          <input type="password" formControlName="motDePasse" class="form-control" maxlength="20">
-        </div>
-        <button type="submit" class="btn btn-primary">Se connecter</button>
-      </form>
+      </div>
     </div>
 
   </div>
-</div>
+</section>
