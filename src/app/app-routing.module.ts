@@ -1,8 +1,17 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import {AppComponent} from './components/base/app.component';
+import {LoginComponent} from './components/login/login.component';
+import {NotFoundComponent} from './components/not-found/not-found.component';
+import {RegisterComponent} from './components/register/register.component';
 
-
-const routes: Routes = [];
+const routes: Routes = [
+  { path: 'home', component: AppComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
+  { path: '', redirectTo: '/home', pathMatch: 'full' }, // prefix
+  { path: '**', component: NotFoundComponent } // ** => wildcard
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
