@@ -7,8 +7,6 @@ import {RegisterComponent} from './components/users/register/register.component'
 import {UserDetailsComponent} from './components/users/user-details/user-details.component';
 import {AddInvoiceComponent} from './components/invoices/add-invoice/add-invoice.component';
 import {ListInvoicesComponent} from './components/invoices/list-invoices/list-invoices.component';
-import {RegisterComponent} from './components/register/register.component';
-import {UserDetailsComponent} from './components/user-details/user-details.component';
 import {HomeComponent} from './components/home/home.component';
 
 const routes: Routes = [
