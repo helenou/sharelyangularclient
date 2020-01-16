@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Router} from '@angular/router';
+import {AuthService} from '../../../services/auth.service';
 
 @Component({
   selector: 'app-register',
@@ -9,23 +11,28 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
-  loading = false;
-  submitted = false;
+  error: {};
+  registerError: string;
 
   constructor(
-    private formBuilder: FormBuilder,
-  ) {
-
-  }
+    private fb: FormBuilder,
+    private router: Router,
+    private authService: AuthService
+  ) {}
 
   ngOnInit() {
-    this.registerForm = this.formBuilder.group({
+    this.registerForm = this.fb.group({
       nom: ['', Validators.required],
       prenom: ['', Validators.required],
       email: ['', Validators.required],
       motDePasse: ['', [Validators.required, Validators.minLength(6)]]
     });
   }
+
+  get nom() { return this.registerForm.get('nom'); }
+  get prenom() { return this.registerForm.get('prenom'); }
+  get email() { return this.registerForm.get('email'); }
+  get motDePasse() { return this.registerForm.get('motDePasse'); }
 
   onSubmit() {}
 }
