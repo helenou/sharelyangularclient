@@ -20,9 +20,10 @@ export class AuthService {
   // Http Headers
   httpOptions = {
     headers: new HttpHeaders({
-      'Content-Type': 'application/json'
-    })
-  }
+      'Content-Type': 'application/json',
+    }),
+    withCredentials: true
+  };
 
   // POST
   login(data) {

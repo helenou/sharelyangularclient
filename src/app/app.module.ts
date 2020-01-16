@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import {HttpClientModule} from '@angular/common/http';
+import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './components/base/app.component';
@@ -14,6 +14,8 @@ import { HeaderComponent } from './components/header/header.component';
 import {AuthService} from './services/auth.service';
 import {AddInvoiceComponent} from './components/invoices/add-invoice/add-invoice.component';
 import {ListInvoicesComponent} from './components/invoices/list-invoices/list-invoices.component';
+import {HttpRequestInterceptor} from './interceptors/HttpRequestInterceptor';
+
 import { HomeComponent } from './components/home/home.component';
 
 @NgModule({
@@ -35,7 +37,13 @@ import { HomeComponent } from './components/home/home.component';
     ReactiveFormsModule,
     HttpClientModule
   ],
-  providers: [AuthService],
+  providers: [
+    AuthService,
+    // Http Interceptor(s) -  adds with Client Credentials
+    [
+      { provide: HTTP_INTERCEPTORS, useClass: HttpRequestInterceptor, multi: true }
+    ],
+  ],
   bootstrap: [HeaderComponent, AppComponent]
 })
 export class AppModule { }
