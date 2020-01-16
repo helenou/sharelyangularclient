@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import {GenericService} from './generic.service';
 import {User} from '../models/user';
 import {HttpClient} from '@angular/common/http';
-import {UserSerializer} from '../components/users/UserSerializer';
 
 @Injectable({
   providedIn: 'root'
