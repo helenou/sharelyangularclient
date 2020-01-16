@@ -1,9 +1,9 @@
-<section class="login-wrap mtb-40">
+<section class="form-wrap mtb-40">
   <div class="container">
     <div class="row justify-content-center" *ngIf="!error">
       <div class="col-md-12">
-        <div class="login-box">
-          <h1>Ajout d'une facture</h1>
+        <div class="form-box">
+          <h1 class="form-name">Ajout d'une facture</h1>
           <div class="alert alert-danger" *ngIf="invoiceError">
             {{invoiceError}}
           </div>
@@ -24,7 +24,7 @@
                 </div>
               </div>
             </div>
-            <div class="form-group">
+            <div class="form-group form-btn">
               <button type="submit" [disabled]="!invoiceForm.valid" class="btn btn-primary">Ajouter</button>
             </div>
           </form>
