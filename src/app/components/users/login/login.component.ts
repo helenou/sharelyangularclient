@@ -1,7 +1,7 @@
 import {Component, NgZone, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
-import {AuthService} from '../../services/auth.service';
+import {AuthService} from '../../../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -38,7 +38,7 @@ export class LoginComponent implements OnInit {
     this.submitted = true;
     this.authService.login(this.loginForm.value).subscribe((data) => {
         if (this.authService.isLoggedIn) {
-          const redirect = this.authService.redirectUrl ? this.authService.redirectUrl : '/home';
+          const redirect = this.authService.redirectUrl ? this.authService.redirectUrl : '/info';
           this.router.navigate([redirect]);
         } else {
           this.loginError = 'Email ou mot de passe incorrect.';

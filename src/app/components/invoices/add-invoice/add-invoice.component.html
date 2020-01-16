@@ -1,0 +1,36 @@
+<section class="login-wrap mtb-40">
+  <div class="container">
+    <div class="row justify-content-center" *ngIf="!error">
+      <div class="col-md-12">
+        <div class="login-box">
+          <h1>Ajout d'une facture</h1>
+          <div class="alert alert-danger" *ngIf="invoiceError">
+            {{invoiceError}}
+          </div>
+          <form [formGroup]="invoiceForm" (ngSubmit)="onSubmit()">
+            <div class="form-group">
+              <input type="text" formControlName="libelle" class="form-control" placeholder="Libelle" required>
+              <div *ngIf="libelle.invalid && (libelle.dirty || libelle.touched)" class="error">
+                <div *ngIf="libelle.errors">
+                  Le libellé est requis
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <input type="number" step="0.01" formControlName="montant" class="form-control" required>
+              <div *ngIf="montant.invalid && (montant.dirty || montant.touched)" class="error">
+                <div *ngIf="montant.errors">
+                  Le montant est requis.
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <button type="submit" [disabled]="!invoiceForm.valid" class="btn btn-primary">Ajouter</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>

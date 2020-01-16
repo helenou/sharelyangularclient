@@ -10,31 +10,32 @@
           <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
             <div class="form-group">
               <input type="text" formControlName="nom" class="form-control" placeholder="Nom" required>
-              <!--div *ngIf="nom.invalid && (nom.dirty || nom.touched)" class="error">
-                <div *ngIf="nom.errors" -->
+              <div *ngIf="nom.invalid && (nom.dirty || nom.touched)" class="error">
+                <div *ngIf="nom.errors" >
                   Un nom est requis.
                 </div>
               </div>
             </div>
             <div class="form-group">
               <input type="text" formControlName="prenom" class="form-control" placeholder="Prenom" required>
-              <!-- div *ngIf="prenom.invalid && (prenom.dirty || prenom.touched)" class="error" -->
-                <div *ngIf="prenom.errors">Un prenom est requis.
+              <div *ngIf="prenom.invalid && (prenom.dirty || prenom.touched)" class="error">
+                <div *ngIf="prenom.errors">
+                  Un prenom est requis.
                 </div>
               </div>
             </div>
             <div class="form-group">
               <input type="text" formControlName="email" class="form-control" placeholder="Email" required>
-              <!--div *ngIf="email.invalid && (email.dirty || email.touched)" class="error">
-                <div *ngIf="email.errors" -->
+              <div *ngIf="email.invalid && (email.dirty || email.touched)" class="error">
+                <div *ngIf="email.errors">
                   L'email est requis.
                 </div>
               </div>
             </div>
             <div class="form-group">
               <input type="password" formControlName="motDePasse" class="form-control" placeholder="Mot de passe" required>
-              <!--div *ngIf="motDePasse.invalid && (motDePasse.dirty || motDePasse.touched)" class="error">
-                <div *ngIf="motDePasse.errors"-->
+              <div *ngIf="motDePasse.invalid && (motDePasse.dirty || motDePasse.touched)" class="error">
+                <div *ngIf="motDePasse.errors">
                   Le mot de passe est requis.
                 </div>
               </div>

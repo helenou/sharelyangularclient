@@ -1,19 +1,18 @@
 import { Injectable } from '@angular/core';
 import {GenericService} from './generic.service';
-import {User} from '../models/user';
 import {HttpClient} from '@angular/common/http';
-import {UserSerializer} from '../components/users/UserSerializer';
+import {Invoice} from '../models/invoice';
+import {InvoiceSerializer} from '../components/invoices/InvoiceSerializer';
 
 @Injectable({
   providedIn: 'root'
 })
-
-export class UserService extends GenericService<User> {
+export class InvoiceService extends GenericService<Invoice> {
   constructor(httpClient: HttpClient) {
     super(
       httpClient,
       'http://localhost:8080/sharely',
-      'me'
+      'invoices'
     );
   }
 }
