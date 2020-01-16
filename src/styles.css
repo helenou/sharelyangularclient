@@ -1,1 +1,49 @@
 /* You can add global styles to this file, and also import other style files */
+body {
+  --c-primary: #2F9B81;
+  --c-danger: #9B2F49;
+  --c-success: #499B2F;
+  --c-light: white;
+  --c-main: #377524;
+  --bg-main: white;
+}
+/* Bootstrap buttons */
+.btn-primary {
+  background-color: var(--c-primary) !important;
+  border: var(--c-primary) solid thin !important;
+}
+.btn-primary:hover {
+  color: var(--c-primary);
+  background-color: var(--c-light) !important;
+}
+
+.input:focus {
+  border: var(--c-primary) solid thin !important;
+}
+
+/* Text Colors */
+.error {
+  color: var(--c-danger);
+}
+
+/* Form style */
+input {
+  border: none !important;
+  border-bottom: var(--c-primary) medium solid !important;
+}
+
+input:focus{
+  -moz-box-shadow: 0px 0px 6px 4px rgba(47,155,130,1) !important;
+  box-shadow: 0px 0px 6px 4px rgba(47,155,130,1) !important;
+}
+
+.form-btn {
+  width: 100%;
+  text-align: center;
+}
+
+.form-name  {
+  text-align: center;
+}
+
+

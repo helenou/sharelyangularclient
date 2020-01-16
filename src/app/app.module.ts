@@ -14,6 +14,7 @@ import { HeaderComponent } from './components/header/header.component';
 import {AuthService} from './services/auth.service';
 import {AddInvoiceComponent} from './components/invoices/add-invoice/add-invoice.component';
 import {ListInvoicesComponent} from './components/invoices/list-invoices/list-invoices.component';
+import { HomeComponent } from './components/home/home.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import {ListInvoicesComponent} from './components/invoices/list-invoices/list-in
     NotFoundComponent,
     RegisterComponent,
     UserDetailsComponent,
+    HomeComponent,
     AddInvoiceComponent,
     ListInvoicesComponent,
   ],
