@@ -1,0 +1,26 @@
+body {
+  --nav-size: 100px;
+}
+.navbar {
+  background-color: var(--c-light);
+  border-bottom: var(--c-main) 5px solid;
+  height: var(--nav-size);
+  margin: 0 0 20px 0;
+  padding: 0;
+}
+
+.navLink, .nav-link {
+  color: var(--c-main);
+}
+
+.navLink:hover {
+  border-bottom: var(--c-main) solid thin;
+  text-decoration: none;
+}
+
+.logo {
+  height: 85px;
+  width: auto;
+  margin: 0;
+  display: inline-block;
+}

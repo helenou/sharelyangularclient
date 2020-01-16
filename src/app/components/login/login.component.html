@@ -3,7 +3,7 @@
     <div class="row justify-content-center" *ngIf="!error">
       <div class="col-md-12">
         <div class="login-box">
-          <h1>Connexion</h1>
+          <h1 class="form-name">Connexion</h1>
           <div class="alert alert-danger" *ngIf="loginError">
             {{loginError}}
           </div>
@@ -24,7 +24,7 @@
                 </div>
               </div>
             </div>
-            <div class="form-group">
+            <div class="form-group form-btn">
               <button type="submit" [disabled]="!loginForm.valid" class="btn btn-primary">Se connecter</button>
             </div>
           </form>

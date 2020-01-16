@@ -1,24 +1,35 @@
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" href="#">Sharely</a>
+      <a class="navbar-brand" href="#">
+        <img src="../../../assets/images/logo.png" alt="Sherely, lien vers l'accueil" class="logo logo-large">
+      </a>
     </div>
-    <ul class="nav navbar-nav">
-      <li class="active"><a href="#">Accueil</a></li>
-    </ul>
-    <ul class="nav navbar-nav navbar-right">
-      <li class="nav-item" *ngIf="!isLoggedIn">
-        <a routerLink="/register" class="nav-link"><span class="glyphicon glyphicon-user"></span>Inscription</a>
-      </li>
-      <li class="nav-item" *ngIf="!isLoggedIn">
-        <a routerLink="/login" class="nav-link"><span class="glyphicon glyphicon-log-in"></span>Connexion</a>
-      </li>
-      <li class="nav-item" *ngIf="isLoggedIn">
-        <a routerLink="/admin" class="nav-link">Mon espace</a>
-      </li>
-      <li class="nav-item" *ngIf="isLoggedIn">
-        <a routerLink="/login" class="nav-link">Déconnexion</a>
-      </li>
-    </ul>
+    <div class="navbar-links">
+      <ul class="nav navbar-nav navbar-right">
+
+        <ng-template *ngIf="isLoggedIn else notLogged">
+          <li class="nav-item">
+            <a routerLink="/admin" class="nav-link navLink">Mon espace</a>
+          </li>
+          <li class="nav-item">
+            <a routerLink="/login" class="nav-link navLink">Déconnexion</a>
+          </li>
+        </ng-template>
+        <ng-template #notLogged>
+          <li class="nav-item">
+            <a routerLink="/register" class="nav-link navLink">
+              <span class="glyphicon glyphicon-user"></span>Inscription
+            </a>
+          </li>
+          <li class="nav-item">
+            <a routerLink="/login" class="nav-link navLink">
+              <span class="glyphicon glyphicon-log-in"></span>Connexion
+            </a>
+          </li>
+        </ng-template>
+      </ul>
+    </div>
+
   </div>
 </nav>
