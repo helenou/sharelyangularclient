@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { Router } from '@angular/router';
-import { AlertService, } from '../../services/alert.service';
-import { AuthService } from '../../services/auth.service';
-import { UserService } from '../../services/user.service';
 import { first } from 'rxjs/operators';
+import {AuthService} from '../../../services/auth.service';
+import {UserService} from '../../../services/user.service';
+import {AlertService} from '../../../services/alert.service';
 
 @Component({
   selector: 'app-register',
@@ -16,14 +16,8 @@ export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
   error: {};
   registerError: string;
-
-  error: {};
-  registerError: string;
-
-  nom: string;
-  prenom: string;
-  email: string;
-  motDePasse: string;
+  submitted = false;
+  loading = false;
 
  constructor(
     private formBuilder: FormBuilder,
@@ -38,7 +32,7 @@ export class RegisterComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.registerForm = this.fb.group({
+    this.registerForm = this.formBuilder.group({
       nom: ['', Validators.required],
       prenom: ['', Validators.required],
       email: ['', Validators.required],
@@ -46,7 +40,13 @@ export class RegisterComponent implements OnInit {
     });
   }
 
-  onSubmit() { // TODO check the below
+  get nom() { return this.registerForm.get('email'); }
+  get prenom() { return this.registerForm.get('motDePasse'); }
+  get email() { return this.registerForm.get('motDePasse'); }
+  get motDePasse() { return this.registerForm.get('motDePasse'); }
+
+
+  onSubmit() {
       this.submitted = true;
 
       this.alertService.clear();
@@ -56,7 +56,7 @@ export class RegisterComponent implements OnInit {
       }
 
       this.loading = true;
-      this.userService.register(this.registerForm.value)
+      this.userService.create(this.registerForm.value)
         .pipe(first())
         .subscribe(
           data => {
