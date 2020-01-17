@@ -11,14 +11,6 @@ import {Generic} from '../models/generic';
 export class GenericService<T extends Generic> {
   errorData: {};
 
-  // Http Headers
-  httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Accept': 'application/json'
-    }),
-  };
-
   constructor(
     private httpClient: HttpClient,
     private url: string,
@@ -27,14 +19,14 @@ export class GenericService<T extends Generic> {
   public create(item: T): Observable<T> {
     // @ts-ignore
     return this.httpClient
-      .post<T>(`${this.url}/${this.endpoint}/new`, JSON.stringify(item), this.httpOptions)
+      .post<T>(`${this.url}/${this.endpoint}/new`, JSON.stringify(item))
       .pipe(map((data: any) => JSON.parse(data) as T),
         catchError(err => this.handleError(err)));
   }
 
   public update(item: T): Observable<T> {
     return this.httpClient
-      .put<T>(`${this.url}/${this.endpoint}/${item.id}`, JSON.stringify(item), this.httpOptions)
+      .put<T>(`${this.url}/${this.endpoint}/${item.id}`, JSON.stringify(item))
       .pipe(map((data: any) => JSON.parse(data) as T));
   }
 

@@ -5,19 +5,24 @@ import {
 
 import { Observable } from 'rxjs';
 import {AuthService} from '../services/auth.service';
+import {CookieService} from 'ngx-cookie-service';
 
 /** Inject With Credentials into the request */
 @Injectable()
 export class HttpRequestInterceptor implements HttpInterceptor {
+  constructor(public auth: AuthService, public cookies: CookieService) {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-
-      request = request.clone({
-        withCredentials: true
+    request = request.clone({
+        setHeaders: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        withCredentials: true,
+        reportProgress: true,
       });
-      console.log(request);
 
-      return next.handle(request);
+    return next.handle(request);
   }
 
 }

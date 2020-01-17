@@ -17,6 +17,7 @@ import {ListInvoicesComponent} from './components/invoices/list-invoices/list-in
 import {HttpRequestInterceptor} from './interceptors/HttpRequestInterceptor';
 
 import { HomeComponent } from './components/home/home.component';
+import {CookieService} from 'ngx-cookie-service';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { HomeComponent } from './components/home/home.component';
     [
       { provide: HTTP_INTERCEPTORS, useClass: HttpRequestInterceptor, multi: true }
     ],
+    CookieService
   ],
   bootstrap: [HeaderComponent, AppComponent]
 })

@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import {Observable, throwError} from 'rxjs';
-import {User} from '../models/user';
 import {catchError, map, retry} from 'rxjs/operators';
+import {CookieService} from 'ngx-cookie-service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,24 +13,17 @@ export class AuthService {
   baseurl = 'http://localhost:8080/sharely';
   errorData: {};
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private cookies: CookieService) { }
 
   redirectUrl: string;
 
-  // Http Headers
-  httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type': 'application/json',
-    })
-  };
-
   // POST
   login(data) {
-    return this.http.post<any>(this.baseurl + '/me/login', JSON.stringify(data), this.httpOptions)
+    return this.http.post<any>(this.baseurl + '/me/login', JSON.stringify(data))
       .pipe(map(user => {
-        console.log(user);
         if (user) {
-          localStorage.setItem('currentUser', JSON.stringify(user));
+          localStorage.setItem('isLoggedIn', 'true');
+          localStorage.setItem('currentUser', JSON.stringify(data));
         }
       }));
   }
@@ -44,6 +37,7 @@ export class AuthService {
 
   logout() {
     localStorage.removeItem('currentUser');
+    localStorage.setItem('isLoggedIn', 'false');
   }
 
   private handleError(error: HttpErrorResponse) {
