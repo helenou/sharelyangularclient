@@ -21,14 +21,14 @@ export class AuthService {
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
-    }),
-    withCredentials: true
+    })
   };
 
   // POST
   login(data) {
     return this.http.post<any>(this.baseurl + '/me/login', JSON.stringify(data), this.httpOptions)
       .pipe(map(user => {
+        console.log(user);
         if (user) {
           localStorage.setItem('currentUser', JSON.stringify(user));
         }

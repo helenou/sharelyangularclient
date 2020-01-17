@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Observable, of} from 'rxjs';
+import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
+import {Observable, of, throwError} from 'rxjs';
 import {catchError, map} from 'rxjs/operators';
 import {Generic} from '../models/generic';
 
@@ -9,13 +9,14 @@ import {Generic} from '../models/generic';
 })
 
 export class GenericService<T extends Generic> {
+  errorData: {};
 
   // Http Headers
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
+      'Accept': 'application/json'
     }),
-    withCredentials: true
   };
 
   constructor(
@@ -27,7 +28,8 @@ export class GenericService<T extends Generic> {
     // @ts-ignore
     return this.httpClient
       .post<T>(`${this.url}/${this.endpoint}/new`, JSON.stringify(item), this.httpOptions)
-      .pipe(map((data: any) => JSON.parse(data) as T));
+      .pipe(map((data: any) => JSON.parse(data) as T),
+        catchError(err => this.handleError(err)));
   }
 
   public update(item: T): Observable<T> {
@@ -49,5 +51,25 @@ export class GenericService<T extends Generic> {
 
   private convertData(data: any): T[] {
     return data.map(item => JSON.stringify(item));
+  }
+
+  private handleError(error: HttpErrorResponse) {
+    if (error.error instanceof ErrorEvent) {
+
+      // A client-side or network error occurred. Handle it accordingly.
+      console.error('An error occurred:', error.error.message);
+    } else {
+
+      // The backend returned an unsuccessful response code.
+      // The response body may contain clues as to what went wrong.
+      console.error(`Backend returned code ${error.status}, ` + `body was: ${error.error}`);
+    }
+
+    // return an observable with a user-facing error message
+    this.errorData = {
+      errorTitle: 'Oops! Request for document failed',
+      errorDesc: 'Something bad happened. Please try again later.'
+    };
+    return throwError(this.errorData);
   }
 }
