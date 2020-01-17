@@ -14,8 +14,8 @@ import { first } from 'rxjs/operators';
 
 export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
-  loading = false;
-  submitted = false;
+  error: {};
+  registerError: string;
 
   error: {};
   registerError: string;
@@ -38,7 +38,7 @@ export class RegisterComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.registerForm = this.formBuilder.group({
+    this.registerForm = this.fb.group({
       nom: ['', Validators.required],
       prenom: ['', Validators.required],
       email: ['', Validators.required],
