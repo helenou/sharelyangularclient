@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { Router } from '@angular/router';
-import { AlertService, } from '../../services/alert.service';
-import { AuthService } from '../../services/auth.service';
-import { UserService } from '../../services/user.service';
-import { first } from 'rxjs/operators';
+import { UserService } from '../../../services/user.service';
+import { AuthService } from '../../../services/auth.service';
+//import { AlertService } from '../../../services/alert.service';
 
 @Component({
   selector: 'app-register',
@@ -14,28 +13,26 @@ import { first } from 'rxjs/operators';
 
 export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
-  error: {};
-  registerError: string;
+  //loading = false;
+  //submitted = false;
 
   error: {};
   registerError: string;
 
-  nom: string;
-  prenom: string;
-  email: string;
-  motDePasse: string;
+
 
  constructor(
-    private formBuilder: FormBuilder,
+    private fb: FormBuilder,
     private router: Router,
-    private authenticationService: AuthService,
     private userService: UserService,
-    private alertService: AlertService
-  ) {
-    if (this.authenticationService.isLoggedIn() === true) { // à vérifier état du currentUser
-      this.router.navigate(['/info']); // naviguer vers l'écran tableau de bord utilisateur
-    }
-  }
+    private authService: AuthService,
+    //private alertService: AlertService
+  )  {}
+  //{
+ //   if (this.authenticationService.isLoggedIn() === true) { // à vérifier état du currentUser
+ //     this.router.navigate(['/info']); // naviguer vers l'écran tableau de bord utilisateur
+ //   }
+ // }
 
   ngOnInit() {
     this.registerForm = this.fb.group({
@@ -46,26 +43,52 @@ export class RegisterComponent implements OnInit {
     });
   }
 
-  onSubmit() { // TODO check the below
-      this.submitted = true;
+/*   get nom() { return this.registerForm.get('nom'); }
+  get prenom() { return this.registerForm.get('prenom'); }
+  get email() { return this.registerForm.get('email'); }
+  get motDePasse() { return this.registerForm.get('motDePasse'); } */
+  
+  get lastName() { return this.registerForm.get('lastName'); }
+  get firstName() { return this.registerForm.get('firstName'); }
+  get email() { return this.registerForm.get('email'); }
+  get password() { return this.registerForm.get('password'); }
 
-      this.alertService.clear();
+  onSubmit() {
+      //this.submitted = true;
+
+      //this.alertService.clear();
 
       if (this.registerForm.invalid) {
-        return;
+        return "Cannot create user, check the fields";
       }
 
-      this.loading = true;
-      this.userService.register(this.registerForm.value)
-        .pipe(first())
-        .subscribe(
-          data => {
-            this.alertService.success('Registration successful', true);
-            this.router.navigate(['/login']);
-          },
-          error => {
-            this.alertService.error(error);
-            this.loading = false;
-          });
-    }
+      //this.loading = true;
+      this.userService.create(this.registerForm.value).subscribe((data) => {
+          if (this.authService.isLoggedIn() === true) {
+            console.log("user already logged in. log out to create new one.");
+            const redirect = this.authService.redirectUrl ? this.authService.redirectUrl : '/login';
+            
+            //this.alertService.success('Registration successful', true);
+	        } else {
+          //this.registerError =
+          //return  'Impossible de vous enregistrer.';
+          console.log("user creation, it should be created here - if no error");
+          this.registerError = 'Impossible d\'ajouter l\'utilisateur.';
+        }
+      },
+      error => this.error = error
+    );
+  }
 }
+
+
+////        }
+	    
+////          },
+////          error => {
+////            this.alertService.error(error);
+            //this.loading = false;
+////           }
+////	  );
+////    }
+////}

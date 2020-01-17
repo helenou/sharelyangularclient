@@ -9,17 +9,17 @@
           </div>
           <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
             <div class="form-group">
-              <input type="text" formControlName="nom" class="form-control" placeholder="Nom" required>
-              <div *ngIf="nom.invalid && (nom.dirty || nom.touched)" class="error">
-                <div *ngIf="nom.errors" >
+              <input type="text" formControlName="lastName" class="form-control" placeholder="nom" required>
+              <div *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)" class="error">
+                <div *ngIf="lastName.errors" >
                   Un nom est requis.
                 </div>
               </div>
             </div>
             <div class="form-group">
-              <input type="text" formControlName="prenom" class="form-control" placeholder="Prenom" required>
-              <div *ngIf="prenom.invalid && (prenom.dirty || prenom.touched)" class="error">
-                <div *ngIf="prenom.errors">
+              <input type="text" formControlName="firstName" class="form-control" placeholder="Prenom" required>
+              <div *ngIf="firstName.invalid && (firstName.dirty || firstName.touched)" class="error">
+                <div *ngIf="firstName.errors">
                   Un prenom est requis.
                 </div>
               </div>
@@ -33,14 +33,15 @@
               </div>
             </div>
             <div class="form-group">
-              <input type="password" formControlName="motDePasse" class="form-control" placeholder="Mot de passe" required>
-              <div *ngIf="motDePasse.invalid && (motDePasse.dirty || motDePasse.touched)" class="error">
-                <div *ngIf="motDePasse.errors">
+              <input type="password" formControlName="password" class="form-control" placeholder="mot de passe" required>
+              <div *ngIf="password.invalid && (password.dirty || password.touched)" class="error">
+                <div *ngIf="password.errors">
                   Le mot de passe est requis.
                 </div>
               </div>
             </div>
             <div class="form-group form-btn">
+              <!--button type="submit" [disabled]="!registerForm.valid" class="btn btn-primary">S'inscrire</!--button -->
               <button type="submit" [disabled]="!registerForm.valid" class="btn btn-primary">S'inscrire</button>
             </div>
           </form>
