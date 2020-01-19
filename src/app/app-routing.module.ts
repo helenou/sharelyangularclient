@@ -8,6 +8,7 @@ import {UserDetailsComponent} from './components/users/user-details/user-details
 import {AddInvoiceComponent} from './components/invoices/add-invoice/add-invoice.component';
 import {ListInvoicesComponent} from './components/invoices/list-invoices/list-invoices.component';
 import {HomeComponent} from './components/home/home.component';
+import {AuthGuard} from './guards/auth.guard';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -17,7 +18,7 @@ const routes: Routes = [
   { path: 'invoices', component: ListInvoicesComponent},
 
   { path: 'register', component: RegisterComponent },
-  { path: '', redirectTo: '/home', pathMatch: 'full' }, // prefix
+  { path: '', component: HomeComponent, canActivate: [AuthGuard] },
   { path: '**', component: NotFoundComponent } // ** => wildcard
 ];
 

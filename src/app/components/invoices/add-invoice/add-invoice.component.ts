@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {InvoiceService} from '../../../services/invoice.service';
 import {AuthService} from '../../../services/auth.service';
+import {AlertService} from '../../../services/alert.service';
 
 @Component({
   selector: 'app-add-invoice',
@@ -11,7 +12,6 @@ import {AuthService} from '../../../services/auth.service';
 })
 export class AddInvoiceComponent implements OnInit {
   invoiceForm: FormGroup;
-  returnUrl: string;
   error: {};
   invoiceError: string;
 
@@ -19,7 +19,8 @@ export class AddInvoiceComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private invoiceService: InvoiceService,
-    private authService: AuthService
+    private authService: AuthService,
+    private alertService: AlertService
   ) { }
 
   ngOnInit() {
@@ -36,12 +37,15 @@ export class AddInvoiceComponent implements OnInit {
     this.invoiceService.create(this.invoiceForm.value).subscribe((data) => {
         if (this.authService.isLoggedIn) {
           const redirect = this.authService.redirectUrl ? this.authService.redirectUrl : '/invoices';
+          this.alertService.success('Ajout réalisé avec succès', true);
           this.router.navigate([redirect]);
         } else {
           this.invoiceError = 'Impossible d\'ajouter la facture.';
         }
       },
-      error => this.error = error
+      error => {
+        this.alertService.error(error);
+      }
     );
   }
 }

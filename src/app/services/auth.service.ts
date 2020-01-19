@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
-import {Observable, throwError} from 'rxjs';
+import {BehaviorSubject, Observable, throwError} from 'rxjs';
 import {catchError, map, retry} from 'rxjs/operators';
 import {CookieService} from 'ngx-cookie-service';
+import {User} from '../models/user';
 
 @Injectable({
   providedIn: 'root'
@@ -12,32 +13,45 @@ export class AuthService {
   // Base url
   baseurl = 'http://localhost:8080/sharely';
   errorData: {};
-
-  constructor(private http: HttpClient, private cookies: CookieService) { }
-
   redirectUrl: string;
+
+  private currentUserSubject: BehaviorSubject<User>;
+  public currentUser: Observable<User>;
+
+  constructor(private http: HttpClient) {
+    this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(sessionStorage.getItem('currentUser')));
+    this.currentUser = this.currentUserSubject.asObservable();
+  }
+
 
   // POST
   login(data) {
     return this.http.post<any>(this.baseurl + '/me/login', JSON.stringify(data))
       .pipe(map(user => {
-        if (user) {
-          localStorage.setItem('isLoggedIn', 'true');
-          localStorage.setItem('currentUser', JSON.stringify(data));
-        }
+        // store user details and jwt token in local storage to keep user logged in between page refreshes
+        sessionStorage.setItem('currentUser', JSON.stringify(data));
+        sessionStorage.setItem('isLoggedIn', 'true');
+
+        this.currentUserSubject.next(user);
+        return data;
       }));
   }
 
+  public get currentUserValue(): User {
+    return this.currentUserSubject.value;
+  }
+
   isLoggedIn() {
-    if (localStorage.getItem('currentUser')) {
+    if (sessionStorage.getItem('currentUser')) {
       return true;
     }
     return false;
   }
 
   logout() {
-    localStorage.removeItem('currentUser');
-    localStorage.setItem('isLoggedIn', 'false');
+    sessionStorage.removeItem('currentUser');
+    sessionStorage.setItem('isLoggedIn', 'false');
+    this.currentUserSubject.next(null);
   }
 
   private handleError(error: HttpErrorResponse) {

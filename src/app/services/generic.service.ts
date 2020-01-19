@@ -33,7 +33,14 @@ export class GenericService<T extends Generic> {
   read(id: number): Observable<T> {
     return this.httpClient
       .get(`${this.url}/${this.endpoint}/${id}`)
-      .pipe(map((data: any) => JSON.parse(data) as T));
+      .pipe(map((res: any) => {
+        return JSON.parse(res.data);
+      }));
+  }
+
+  readAll() {
+    return this.httpClient
+      .get(`${this.url}/${this.endpoint}/`);
   }
 
   delete(id: number) {

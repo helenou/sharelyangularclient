@@ -1,1 +1,20 @@
-<h2>Liste des factures</h2>
+<h2>Liste de factures</h2>
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th>Id</th>
+    <th>Libelle</th>
+    <th>Date</th>
+    <th>Montant</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let invoice of invoices">
+    <td>{{invoice[0]}}</td>
+    <td>{{invoice[1]}}</td>
+    <td>{{invoice[2]}}</td>
+    <td>{{invoice[3]}}</td>
+  </tr>
+
+  </tbody>
+</table>

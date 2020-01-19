@@ -1,7 +1,8 @@
 import {Component, NgZone, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {AuthService} from '../../../services/auth.service';
+import {AlertService} from '../../../services/alert.service';
 
 @Component({
   selector: 'app-login',
@@ -18,24 +19,40 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
+    private route: ActivatedRoute,
     private router: Router,
-    private authService: AuthService
-  ) { }
+    private authService: AuthService,
+    private alertService: AlertService
+  ) {
+    // redirect to home if already logged in
+    if (this.authService.currentUserValue) {
+      this.router.navigate(['/']);
+    }
+  }
 
   ngOnInit() {
     this.loginForm = this.fb.group({
       email: ['', Validators.required],
-      motDePasse: ['', Validators.required]
+      password: ['', Validators.required]
     });
 
     this.authService.logout();
   }
 
   get email() { return this.loginForm.get('email'); }
-  get motDePasse() { return this.loginForm.get('motDePasse'); }
+  get password() { return this.loginForm.get('password'); }
 
   onSubmit() {
+    // reset alerts on submit
+    this.alertService.clear();
+
     this.submitted = true;
+
+    // stop here if form is invalid
+    if (this.loginForm.invalid) {
+      return;
+    }
+
     this.authService.login(this.loginForm.value).subscribe((data) => {
         if (this.authService.isLoggedIn) {
           const redirect = this.authService.redirectUrl ? this.authService.redirectUrl : '/info';
@@ -44,7 +61,9 @@ export class LoginComponent implements OnInit {
           this.loginError = 'Email ou mot de passe incorrect.';
         }
       },
-      error => this.error = error
+      error => {
+        this.alertService.error(error);
+      }
     );
   }
 }
