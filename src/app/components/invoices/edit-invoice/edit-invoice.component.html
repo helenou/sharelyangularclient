@@ -1,5 +1,4 @@
-<h2>Liste de factures</h2>
+<h2>Détails de la facture</h2>
 <div *ngFor="let item of invoice | keyvalue">
-  {{item | json }}
-  Object Key:{{item.key}} and Object Value:{{item.value}}
+  {{item.key | json}} => {{item.value | json}}
 </div>
