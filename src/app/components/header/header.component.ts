@@ -1,6 +1,7 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {Title} from '@angular/platform-browser';
 import {AuthService} from '../../services/auth.service';
+import {User} from '../../models/user';
 
 @Component({
   selector: 'app-header',
@@ -19,9 +20,16 @@ export class HeaderComponent implements OnInit {
   classShowRegister = '';
   classShowLogin = '';
 
-  constructor( private titleService: Title, private authService: AuthService) { }
+  currentUser: User;
+
+
+  constructor( private titleService: Title, private authService: AuthService) {
+    this.authService.currentUser.subscribe(x => this.currentUser = x);
+
+  }
 
   ngOnInit() {
+
   }
 
   get isLoggedIn() { return this.authService.isLoggedIn(); }
@@ -42,5 +50,9 @@ export class HeaderComponent implements OnInit {
         this.classShowLogin = '';
         this.classShowRegister = 'show';
     }
+  }
+
+  logout() {
+    this.authService.logout();
   }
 }

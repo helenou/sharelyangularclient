@@ -27,7 +27,8 @@ export class RegisterComponent implements OnInit {
       lastName: ['', Validators.required],
       firstName: ['', Validators.required],
       email: ['', Validators.required],
-      password: ['', [Validators.required, Validators.minLength(6)]]
+      // tslint:disable-next-line:max-line-length
+      password: ['', [Validators.required, Validators.pattern('^(?=[^A-Z]*[A-Z])(?=[^a-z]*[a-z])(?=\\D*\\d)[A-Za-z\\d!$%@#£€*?&]{8,}$')]]
     });
   }
 
@@ -37,18 +38,12 @@ export class RegisterComponent implements OnInit {
   get password() { return this.registerForm.get('password'); }
 
   onSubmit() {
-
       if (this.registerForm.invalid) {
         return 'Cannot create user, check the fields';
       }
 
-      this.userService.create(this.registerForm.value).subscribe((data) => {
-          if (this.authService.isLoggedIn() === true) {
-            console.log('user already logged in. log out to create new one.');
-            const redirect = this.authService.redirectUrl ? this.authService.redirectUrl : '/login'; } else {
-          console.log('user creation, it should be created here - if no error');
-          this.registerError = 'Impossible d\'ajouter l\'utilisateur.';
-        }
+      this.authService.register(this.registerForm.value).subscribe((data) => {
+        console.log(data);
       },
       error => this.error = error
     );

@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import {BehaviorSubject, Observable, throwError} from 'rxjs';
 import {catchError, map, retry} from 'rxjs/operators';
-import {CookieService} from 'ngx-cookie-service';
 import {User} from '../models/user';
+import {Router} from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +18,7 @@ export class AuthService {
   private currentUserSubject: BehaviorSubject<User>;
   public currentUser: Observable<User>;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private router: Router) {
     this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(sessionStorage.getItem('currentUser')));
     this.currentUser = this.currentUserSubject.asObservable();
   }
@@ -31,8 +31,15 @@ export class AuthService {
         // store user details and jwt token in local storage to keep user logged in between page refreshes
         sessionStorage.setItem('currentUser', JSON.stringify(data));
         sessionStorage.setItem('isLoggedIn', 'true');
-
         this.currentUserSubject.next(user);
+        return data;
+      }));
+  }
+
+  // POST
+  register(data) {
+    return this.http.post<any>(this.baseurl + '/me/register', JSON.stringify(data))
+      .pipe(map(user => {
         return data;
       }));
   }
@@ -52,6 +59,7 @@ export class AuthService {
     sessionStorage.removeItem('currentUser');
     sessionStorage.setItem('isLoggedIn', 'false');
     this.currentUserSubject.next(null);
+    this.router.navigate(['/login']);
   }
 
   private handleError(error: HttpErrorResponse) {

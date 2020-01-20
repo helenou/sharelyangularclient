@@ -28,7 +28,14 @@ export class ListInvoicesComponent implements OnInit {
   }
 
   onSelect(invoice: Invoice): void {
-    console.log(invoice);
     this.selectedInvoice = invoice;
+  }
+
+  editInvoice(invoice: Invoice) {
+    this.router.navigate(['/edit-invoice/' + invoice[0]]);
+  }
+
+  addInvoice() {
+    this.router.navigate(['/add-invoice']);
   }
 }

@@ -55,7 +55,7 @@ export class LoginComponent implements OnInit {
 
     this.authService.login(this.loginForm.value).subscribe((data) => {
         if (this.authService.isLoggedIn) {
-          const redirect = this.authService.redirectUrl ? this.authService.redirectUrl : '/info';
+          const redirect = this.authService.redirectUrl ? this.authService.redirectUrl : '/dashboard';
           this.router.navigate([redirect]);
         } else {
           this.loginError = 'Email ou mot de passe incorrect.';

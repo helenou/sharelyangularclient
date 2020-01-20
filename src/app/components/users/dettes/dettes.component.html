@@ -1,0 +1,28 @@
+<h2>Liste des dettes</h2>
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th>Libelle</th>
+    <th>Date</th>
+    <th>Montant</th>
+    <th>Qui me doit?</th>
+    <th>Action</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td>Trajet Lille - Paris</td>
+    <td>10/01/2020</td>
+    <td>22,40</td>
+    <td>Alexis</td>
+    <td><button class="btn btn-success" style="margin-left: 20px;"> Demander</button></td>
+  </tr>
+  <tr *ngFor="let det of dettes">
+    <td>{{det[1]}}</td>
+    <td>{{det[2]}}</td>
+    <td>{{det[3]}}</td>
+    <td><button class="btn btn-success" (click)="demander(det)" style="margin-left: 20px;"> Demander</button></td>
+  </tr>
+
+  </tbody>
+</table>

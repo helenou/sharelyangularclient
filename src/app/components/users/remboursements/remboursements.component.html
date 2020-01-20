@@ -1,0 +1,28 @@
+<h2>Liste des remboursements</h2>
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th>Libelle</th>
+    <th>Date</th>
+    <th>Montant</th>
+    <th>A qui je dois ?</th>
+    <th>Action</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td>Restaurant la Cimaise</td>
+    <td>20/01/2020</td>
+    <td>14,90</td>
+    <td>Houdheyfa</td>
+    <td><button class="btn btn-success" style="margin-left: 20px;"> Rembourser</button></td>
+  </tr>
+  <tr *ngFor="let rem of remboursements">
+    <td>{{rem[1]}}</td>
+    <td>{{rem[2]}}</td>
+    <td>{{rem[3]}}</td>
+    <td><button class="btn btn-success" (click)="rembourser(rem)" style="margin-left: 20px;"> Rembourser</button></td>
+  </tr>
+
+  </tbody>
+</table>

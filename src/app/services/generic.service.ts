@@ -19,15 +19,12 @@ export class GenericService<T extends Generic> {
   public create(item: T): Observable<T> {
     // @ts-ignore
     return this.httpClient
-      .post<T>(`${this.url}/${this.endpoint}/new`, JSON.stringify(item))
-      .pipe(map((data: any) => JSON.parse(data) as T),
-        catchError(err => this.handleError(err)));
+      .post<T>(`${this.url}/${this.endpoint}/new`, JSON.stringify(item));
   }
 
   public update(item: T): Observable<T> {
     return this.httpClient
-      .put<T>(`${this.url}/${this.endpoint}/${item.id}`, JSON.stringify(item))
-      .pipe(map((data: any) => JSON.parse(data) as T));
+      .put<T>(`${this.url}/${this.endpoint}/${item.id}`, JSON.stringify(item));
   }
 
   read(id: number) {

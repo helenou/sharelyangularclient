@@ -1,4 +1,83 @@
-<h2>Détails de la facture</h2>
-<div *ngFor="let item of invoice | keyvalue">
-  {{item.key | json}} => {{item.value | json}}
+<h2>Facture n°{{invoice["id"] | json}}</h2>
+
+<div class="row">
+  <div class="col-4">
+    <div class="list-group" id="list-tab" role="tablist">
+      <a class="list-group-item list-group-item-action active" id="list-home-list" data-toggle="list" href="#list-home" role="tab" aria-controls="home">Informations</a>
+      <a class="list-group-item list-group-item-action" id="list-profile-list" data-toggle="list" href="#list-profile" role="tab" aria-controls="profile">Lignes de facture</a>
+      <a class="list-group-item list-group-item-action" id="list-messages-list" data-toggle="list" href="#list-messages" role="tab" aria-controls="messages">Participations</a>
+    </div>
+  </div>
+  <div class="col-8">
+    <div class="tab-content" id="nav-tabContent">
+      <div class="tab-pane fade show active" id="list-home" role="tabpanel" aria-labelledby="list-home-list">
+        <ul class="list-group">
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            Libellé
+            <span class="badge badge-success badge-pill">{{libelle}}</span>
+          </li>
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            Montant
+            <span class="badge badge-success badge-pill">{{montant}}</span>
+          </li>
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            Répartition
+            <span class="badge badge-success badge-pill">{{repartition}}</span>
+          </li>
+        </ul>
+      </div>
+      <div class="tab-pane fade" id="list-profile" role="tabpanel" aria-labelledby="list-profile-list">
+        <div *ngIf="lignesFactures['length'] == 0 else viewLignesFactures">
+          Aucune ligne de facture présente.
+        </div>
+        <ng-template #viewLignesFactures>
+          <table class="table table-striped">
+            <thead>
+            <tr>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+            </tr>
+            </thead>
+            <tbody>
+
+            <tr *ngFor="let lf of lignesFactures; let i = index">
+
+              <td>{{lf[i]}}</td>
+              <td>{{lf[1]}}</td>
+              <td>{{lf[2]}}</td>
+              <td>{{lf[3]}}</td>
+            </tr>
+            </tbody>
+          </table>
+        </ng-template>
+      </div>
+      <div class="tab-pane fade" id="list-messages" role="tabpanel" aria-labelledby="list-messages-list">
+        <div *ngIf="participations['length'] == 0 else viewParticipations">
+          Aucun participant présent..
+        </div>
+        <ng-template #viewParticipations>
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th>Qui?</th>
+            <th>Montant dû</th>
+            <th>Montant payé</th>
+            <th>Date validation</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let p of participations;  let i = index">
+            <td>{{p["utilisateur"]["prenom"]}}</td>
+            <td>{{p["montantDu"]}}</td>
+            <td>{{p["montantPaye"]}}</td>
+            <td>{{p["dateValidation"]}}</td>
+          </tr>
+          </tbody>
+        </table>
+        </ng-template>
+      </div>
+    </div>
+  </div>
 </div>

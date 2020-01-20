@@ -5,12 +5,11 @@ import {
 
 import { Observable } from 'rxjs';
 import {AuthService} from '../services/auth.service';
-import {CookieService} from 'ngx-cookie-service';
 
 /** Inject With Credentials into the request */
 @Injectable()
 export class HttpRequestInterceptor implements HttpInterceptor {
-  constructor(public auth: AuthService, public cookies: CookieService) {}
+  constructor(public auth: AuthService) {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     request = request.clone({

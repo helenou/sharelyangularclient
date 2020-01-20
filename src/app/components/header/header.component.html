@@ -1,29 +1,28 @@
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" href="/">
+      <a class="navbar-brand" routerLink="/">
         <img src="../../../assets/images/logo.png" alt="Sherely, lien vers l'accueil" class="logo logo-large">
       </a>
     </div>
     <div class="navbar-links">
       <ul class="nav navbar-nav navbar-right">
-
-        <ng-template *ngIf="isLoggedIn else notLogged">
+        <div *ngIf="isLoggedIn else notLogged">
           <li class="nav-item">
-            <a routerLink="/info" class="nav-link navLink">Mon espace</a>
+            <a routerLink="/dashboard" class="nav-link navLink">Tableau de bord</a>
           </li>
           <li class="nav-item">
-            <a routerLink="/login" class="nav-link navLink">Déconnexion</a>
+            <a (click)="logout()" class="nav-link navLink">Déconnexion</a>
           </li>
-        </ng-template>
+        </div>
         <ng-template #notLogged>
           <li class="nav-item">
-            <a data-toggle="modal" data-target="#login-modal" class="nav-link navLink" (click)="openModal('register')">
+            <a class="nav-link navLink" routerLink="/register">
               <span class="glyphicon glyphicon-user"></span>Inscription
             </a>
           </li>
           <li class="nav-item">
-            <a data-toggle="modal" data-target="#login-modal" class="nav-link navLink" (click)="openModal('login')">
+            <a class="nav-link navLink"  routerLink="/login">
               <span class="glyphicon glyphicon-log-in"></span>Connexion
             </a>
           </li>
@@ -34,29 +33,3 @@
   </div>
 </nav>
 
-<div id="login-modal" class="modal" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <nav>
-          <div class="nav nav-tabs" id="nav-tab" role="tablist">
-            <a class="nav-item nav-link {{classActiveLogin}}" id="nav-home-tab" data-toggle="tab" href="#pills-login" role="tab" aria-controls="nav-home" aria-selected="true">Connexion</a>
-            <a class="nav-item nav-link {{classActiveRegister}}" id="nav-profile-tab" data-toggle="tab" href="#pills-register" role="tab" aria-controls="nav-profile" aria-selected="false">Inscription</a>
-          </div>
-        </nav>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-
-      <div class="modal-body tab-content" id="pills-tabContent">
-        <div class="tab-pane fade {{classShowLogin}} {{classActiveLogin}}" id="pills-login" role="tabpanel" aria-labelledby="pills-login-tab">
-          <app-login></app-login>
-        </div>
-        <div class="tab-pane fade {{classShowRegister}} {{classActiveRegister}}" id="pills-register" role="tabpanel" aria-labelledby="pills-register-tab">
-          <app-register></app-register>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>

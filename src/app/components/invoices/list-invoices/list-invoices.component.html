@@ -1,21 +1,22 @@
 <h2>Liste de factures</h2>
+<button class="btn btn-danger" style="width:100px" (click)="addInvoice()"> Ajouter</button>
 <table class="table table-striped">
   <thead>
   <tr>
-    <th>Id</th>
     <th>Libelle</th>
     <th>Date</th>
     <th>Montant</th>
+    <th></th>
   </tr>
   </thead>
   <tbody>
   <tr *ngFor="let invoice of invoices"
       [class.selected]="invoice === selectedInvoice"
       (click)="onSelect(invoice)">
-    <td><a routerLink="/edit-invoice/{{invoice[0]}}" class="nav-link">{{invoice[0]}}</a></td>
     <td>{{invoice[1]}}</td>
     <td>{{invoice[2]}}</td>
     <td>{{invoice[3]}}</td>
+    <td><button class="btn btn-success" (click)="editInvoice(invoice)" style="margin-left: 20px;"> Modifier</button></td>
   </tr>
 
   </tbody>
