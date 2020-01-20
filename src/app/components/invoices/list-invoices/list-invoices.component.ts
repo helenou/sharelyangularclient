@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {InvoiceService} from '../../../services/invoice.service';
 import {AuthService} from '../../../services/auth.service';
 import {AlertService} from '../../../services/alert.service';
+import {Invoice} from '../../../models/invoice';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-list-invoices',
@@ -9,13 +11,15 @@ import {AlertService} from '../../../services/alert.service';
   styleUrls: ['./list-invoices.component.css']
 })
 export class ListInvoicesComponent implements OnInit {
-  invoices: {}
+  invoices: {};
+  selectedInvoice: Invoice;
 
   constructor(
     private invoiceService: InvoiceService,
     private authService: AuthService,
-    private alertService: AlertService
-  ) { }
+    private alertService: AlertService,
+    private router: Router
+) { }
 
   ngOnInit() {
     this.invoiceService.readAll().subscribe((res: any) => {
@@ -23,4 +27,8 @@ export class ListInvoicesComponent implements OnInit {
     });
   }
 
+  onSelect(invoice: Invoice): void {
+    console.log(invoice);
+    this.selectedInvoice = invoice;
+  }
 }

@@ -30,12 +30,9 @@ export class GenericService<T extends Generic> {
       .pipe(map((data: any) => JSON.parse(data) as T));
   }
 
-  read(id: number): Observable<T> {
+  read(id: number) {
     return this.httpClient
-      .get(`${this.url}/${this.endpoint}/${id}`)
-      .pipe(map((res: any) => {
-        return JSON.parse(res.data);
-      }));
+      .get(`${this.url}/${this.endpoint}/${id}`);
   }
 
   readAll() {

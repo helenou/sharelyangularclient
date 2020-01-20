@@ -9,8 +9,10 @@
   </tr>
   </thead>
   <tbody>
-  <tr *ngFor="let invoice of invoices">
-    <td>{{invoice[0]}}</td>
+  <tr *ngFor="let invoice of invoices"
+      [class.selected]="invoice === selectedInvoice"
+      (click)="onSelect(invoice)">
+    <td><a routerLink="/edit-invoice/{{invoice[0]}}" class="nav-link">{{invoice[0]}}</a></td>
     <td>{{invoice[1]}}</td>
     <td>{{invoice[2]}}</td>
     <td>{{invoice[3]}}</td>

@@ -18,6 +18,7 @@ import {HttpRequestInterceptor} from './interceptors/HttpRequestInterceptor';
 
 import { HomeComponent } from './components/home/home.component';
 import {CookieService} from 'ngx-cookie-service';
+import { EditInvoiceComponent } from './components/invoices/edit-invoice/edit-invoice.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import {CookieService} from 'ngx-cookie-service';
     HomeComponent,
     AddInvoiceComponent,
     ListInvoicesComponent,
+    EditInvoiceComponent,
   ],
   imports: [
     BrowserModule,

@@ -9,6 +9,7 @@ import {AddInvoiceComponent} from './components/invoices/add-invoice/add-invoice
 import {ListInvoicesComponent} from './components/invoices/list-invoices/list-invoices.component';
 import {HomeComponent} from './components/home/home.component';
 import {AuthGuard} from './guards/auth.guard';
+import {EditInvoiceComponent} from './components/invoices/edit-invoice/edit-invoice.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -16,6 +17,7 @@ const routes: Routes = [
   { path: 'info', component: UserDetailsComponent},
   { path: 'add-invoice', component: AddInvoiceComponent},
   { path: 'invoices', component: ListInvoicesComponent},
+  { path: 'edit-invoice/:id', component: EditInvoiceComponent},
 
   { path: 'register', component: RegisterComponent },
   { path: '', component: HomeComponent, canActivate: [AuthGuard] },
