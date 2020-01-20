@@ -35,5 +35,7 @@ export class EditInvoiceComponent implements OnInit {
   log(val) { console.log(val); }
 
 
+  addParticipant() {
 
+  }
 }
